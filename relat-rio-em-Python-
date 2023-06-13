@@ -1,0 +1,37 @@
+# Relatório de Vendas
+
+## Descrição
+
+Este relatório apresenta uma análise das vendas mensais de uma empresa.
+
+## Dados
+
+Os dados de vendas estão disponíveis no arquivo `sales.csv`. O arquivo contém as seguintes colunas:
+- `Data`: Data da venda.
+- `Produto`: Nome do produto vendido.
+- `Quantidade`: Quantidade vendida.
+- `Preço Unitário`: Preço unitário do produto.
+- `Total`: Total de vendas para o produto.
+
+## Análise de Vendas Mensais
+
+O código Python abaixo carrega o arquivo de vendas e realiza uma análise dos dados para apresentar as vendas mensais totais:
+
+```python
+import pandas as pd
+
+# Carregar os dados de vendas do arquivo CSV
+df = pd.read_csv('sales.csv')
+
+# Converter a coluna de data para o formato de data
+df['Data'] = pd.to_datetime(df['Data'])
+
+# Extrair o mês e o ano da data
+df['Mês'] = df['Data'].dt.month
+df['Ano'] = df['Data'].dt.year
+
+# Calcular as vendas mensais totais
+vendas_mensais = df.groupby(['Mês', 'Ano'])['Total'].sum()
+
+# Imprimir as vendas mensais
+print(vendas_mensais)
